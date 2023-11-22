@@ -1,0 +1,43 @@
+spring:
+  data:
+    redis:
+      host: ${spring.redis.host:localhost}
+      password: ${spring.redis.password:admin}
+  application:
+    name: demo-spring-boot-telemetry
+management:
+  info:
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: [ "health", "info", "env" ]
+  endpoint:
+    env:
+      enabled: true
+    health:
+      probes:
+        enabled: true
+    info:
+      enabled: true
+  tracing:
+    enabled: false
+    sampling:
+      probability: 1.0
+  health:
+    redis:
+      enabled: true
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+    tags:
+      application: ${spring.application.name}
+## Configuring info endpoint
+info:
+  app:
+    name: Spring Boot Application Demo with OpenTelemetry
+logging.pattern.level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
