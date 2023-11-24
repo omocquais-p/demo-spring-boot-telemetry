@@ -39,7 +39,7 @@ services:
       - METRICS_HOST=app
       - METRICS_PORT=8080
       - PROMETHEUS_PORT=9090
-      - TEMPO_PORT=4317
+      - TEMPO_PORT=4318
       - TEMPO_HOST=tempo
     profiles:
       - observability
