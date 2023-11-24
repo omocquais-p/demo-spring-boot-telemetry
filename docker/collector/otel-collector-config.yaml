@@ -15,16 +15,30 @@ receivers:
             - targets: [ "${env:METRICS_HOST}:${env:METRICS_PORT}" ]
 
 processors:
-  # batch metrics before sending to reduce API usage
+  resource:
+    attributes:
+      - action: insert
+        key: loki.format
+        value: raw
+      - action: insert
+        key: loki.resource.labels
+        value: app, runtime
   batch:
-    timeout: 10s
+    timeout: 1s
+    send_batch_size: 1024
 
 exporters:
   logging:
     loglevel: debug
 
-  otlp:
-    endpoint: "${env:TEMPO_HOST}:${env:TEMPO_PORT}"
+  # Data sources: traces, metrics
+#  otlphttp:
+#    endpoint: http://${env:TEMPO_HOST}:${env:TEMPO_PORT}
+#    tls:
+#      insecure: true
+
+  otlp/tempo:
+    endpoint: ${env:TEMPO_HOST}:${env:TEMPO_PORT}
     tls:
       insecure: true
 
@@ -50,7 +64,7 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [otlp]
+      exporters: [logging, otlp/tempo]
     metrics:
       receivers: [otlp]
       processors: [batch]
