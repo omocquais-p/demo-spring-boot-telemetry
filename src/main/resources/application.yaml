@@ -34,7 +34,8 @@ management:
         http:
           server:
             requests: true
-    tags:
+  observations:
+    key-values:
       application: ${spring.application.name}
 ## Configuring info endpoint
 info:
