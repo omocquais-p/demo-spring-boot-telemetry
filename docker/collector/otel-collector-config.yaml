@@ -29,8 +29,8 @@ processors:
     send_batch_size: 1024
 
 exporters:
-  logging:
-    loglevel: debug
+#  logging:
+#    loglevel: debug
 
   # Data sources: traces, metrics
 #  otlphttp:
@@ -65,7 +65,7 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [logging, otlp/tempo]
+      exporters: [otlp/tempo]
     metrics:
       receivers: [otlp]
       processors: [batch]
