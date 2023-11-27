@@ -14,7 +14,7 @@ services:
       - MANAGEMENT_TRACING_ENABLED=true
       - MANAGEMENT_OTLP_METRICS_EXPORT_URL=http://otel:4318/v1/metrics
       - MANAGEMENT_OTLP_METRICS_EXPORT_ENABLED=true
-      - MANAGEMENT_OTLP_TRACING_ENDPOINT=http://otel:4318
+      - MANAGEMENT_OTLP_TRACING_ENDPOINT=http://otel:4318/v1/traces
       - LOGGING_LEVEL_ROOT=debug
     depends_on:
       - redis

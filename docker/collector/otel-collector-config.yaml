@@ -3,6 +3,7 @@ receivers:
   otlp:
     protocols:
       grpc:
+      http:
 
   # Data sources: metrics
   prometheus:
