@@ -15,7 +15,7 @@ services:
       - MANAGEMENT_OTLP_METRICS_EXPORT_URL=http://otel:4318/v1/metrics
       - MANAGEMENT_OTLP_METRICS_EXPORT_ENABLED=true
       - MANAGEMENT_OTLP_TRACING_ENDPOINT=http://otel:4318/v1/traces
-      - LOGGING_LEVEL_ROOT=debug
+#      - LOGGING_LEVEL_ROOT=debug
     depends_on:
       - redis
       - otel
@@ -40,7 +40,7 @@ services:
       - METRICS_HOST=app
       - METRICS_PORT=8080
       - PROMETHEUS_PORT=9090
-      - TEMPO_PORT=4318
+      - TEMPO_PORT=4317
       - TEMPO_HOST=tempo
     profiles:
       - observability
