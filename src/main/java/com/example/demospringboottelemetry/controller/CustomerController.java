@@ -4,6 +4,7 @@ package com.example.demospringboottelemetry.controller;
 import com.example.demospringboottelemetry.dto.CustomerDTO;
 import com.example.demospringboottelemetry.repository.CustomerResponseDTO;
 import com.example.demospringboottelemetry.service.CustomerService;
+import io.micrometer.core.annotation.Timed;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ public class CustomerController {
 
   @PostMapping("/customer")
   @ResponseStatus(HttpStatus.CREATED)
+  @Timed(value = "creating.time", description = "Time taken to create customer")
   public CustomerResponseDTO create(@Valid @RequestBody CustomerDTO customerDTO) {
     LOGGER.info("Create customer request {}", customerDTO);
     return customerService.create(customerDTO);

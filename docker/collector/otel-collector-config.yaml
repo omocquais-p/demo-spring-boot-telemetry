@@ -13,7 +13,7 @@ receivers:
           scrape_interval: 5s
           metrics_path: '/actuator/prometheus'
           static_configs:
-            - targets: [ "${env:METRICS_HOST}:${env:METRICS_PORT}" ]
+            - targets: ['0.0.0.0:8080']
 
 processors:
   resource:
@@ -29,8 +29,8 @@ processors:
     send_batch_size: 1024
 
 exporters:
-#  logging:
-#    loglevel: debug
+  logging:
+    loglevel: debug
 
   # Data sources: traces, metrics
 #  otlphttp:
@@ -49,7 +49,7 @@ exporters:
       insecure: true
 
   prometheus:
-    endpoint: ":${env:PROMETHEUS_PORT}"
+    endpoint: "0.0.0.0:9090"
 
 extensions:
   # responsible for responding to health check calls on behalf of the collector.
@@ -69,7 +69,7 @@ service:
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [prometheus]
+      exporters: [logging, prometheus]
     logs:
       receivers: [otlp]
       processors: [batch]
