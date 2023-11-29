@@ -33,3 +33,9 @@ start-app:
 	set -e ;\
 	docker compose --profile observability up ;\
 	}
+
+stop-app:
+	{ \
+	set -e ;\
+	docker compose --profile observability down ;\
+	}
