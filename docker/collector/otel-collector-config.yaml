@@ -29,17 +29,11 @@ processors:
     send_batch_size: 1024
 
 exporters:
-  logging:
-    loglevel: debug
+  debug:
+    verbosity: detailed
 
-  # Data sources: traces, metrics
-#  otlphttp:
-#    endpoint: http://${env:TEMPO_HOST}:${env:TEMPO_PORT}
-#    tls:
-#      insecure: true
-
-  otlp/tempo:
-    endpoint: ${env:TEMPO_HOST}:${env:TEMPO_PORT}
+  otlp:
+    endpoint: tempo:4317
     tls:
       insecure: true
 
@@ -49,7 +43,9 @@ exporters:
       insecure: true
 
   prometheus:
-    endpoint: "0.0.0.0:9090"
+    endpoint: "0.0.0.0:8889"
+    const_labels:
+      label1: spring
 
 extensions:
   # responsible for responding to health check calls on behalf of the collector.
@@ -65,12 +61,12 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [otlp/tempo]
+      exporters: [otlp]
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [logging, prometheus]
+      exporters: [prometheus, debug]
     logs:
       receivers: [otlp]
       processors: [batch]
-      exporters: [ loki]
+      exporters: [loki]
